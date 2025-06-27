@@ -9,6 +9,24 @@ The main documents in this repository include:
 * **PROMPT_TO_GENERATE_AND_REVISE_GUIDES.md** – the seed prompt used to research best practices and compile the guide.
 * **EXAMPLE_USING_THE_TECHNIQUE_IN_CLAUDE_CODE.md** – a transcript demonstrating how to iteratively apply the guide with an agentic coding assistant like Claude Code.
 
+## Recommended Workflow
+
+The documentation in this repo grew out of a real project that combined a Python FastAPI backend with a modern Next.js 15 frontend.  To establish a solid baseline, multiple models — Claude Opus 4, OpenAI’s GPT‑4o, and Gemini Deep Research — were asked to scour the web for the latest best practices in this stack.  Their findings were merged into a single guide using a model with a large context window (Gemini 2.5 Pro or Opus works well).
+
+Iterate on the guide until the models largely agree that it captures the current state of the art.  Example prompts for this refinement loop live in `PROMPT_TO_GENERATE_AND_REVISE_GUIDES.md`, and the resulting document is `NEXTJS15_BEST_PRACTICES.md`.
+
+Once the guide is stable, commit your code to git and launch Claude Code in background task mode.  Many users create a convenient alias:
+
+```bash
+alias cc='ENABLE_BACKGROUND_TASKS=1 claude --dangerously-skip-permissions'
+```
+
+Ask Claude Code to carefully read the best practices guide and begin implementing it across the project.  Progress is tracked in `NEXT_BEST_PRACTICES_IMPLEMENTATION_PROGRESS.md`.  Because models sometimes overstate completion, review this progress file yourself and ensure it only marks tasks complete once the pattern is applied throughout the codebase.
+
+As the project evolves, you may need to start a fresh conversation (for instance, when swapping API keys or compacting the context).  Each time, load both the best practices document and the progress tracker so the model has full context.  Commit between iterations so changes can be reverted if necessary.
+
+---
+
 When using these files with an AI, the typical workflow looks like this:
 
 1. **Read the full guide** to understand the recommended approach for file structure, state management, server actions, caching, and more. The guide begins with the statement:
